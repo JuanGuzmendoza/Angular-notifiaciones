@@ -8,14 +8,7 @@ import { isPlatformBrowser } from '@angular/common';
 @Component({
   selector: 'app-root',
   standalone: true,
-  template: `
-    <div *ngFor="let item of data | keyvalue">
-      <div class="bg-white shadow-md rounded p-4 mb-4">
-      <h2 class="text-lg font-bold">{{ item.value.headings && item.value.headings.en }}</h2>
-      <p class="text-gray-600">{{ item.value.contents && item.value.contents.en }}</p>
-      </div>
-    </div>
-  `,
+  templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   imports: [HttpClientModule, CommonModule, RouterOutlet]
 })
@@ -29,9 +22,9 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.http.get('https://api-medicina-abf75-default-rtdb.firebaseio.com/Data.json').subscribe(response => {
+    this.http.get('https://api-medicina-abf75-default-rtdb.firebaseio.com/Data.json?_=' + new Date().getTime()).subscribe(response => {
       this.data = response;
-      console.log(this.data);
+      console.log("Conexion Exitosa")
     });
 
     if (isPlatformBrowser(this.platformId)) {
@@ -40,4 +33,5 @@ export class AppComponent implements OnInit {
       });
     }
   }
+
 }
